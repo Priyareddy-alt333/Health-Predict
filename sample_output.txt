@@ -1,0 +1,23 @@
+SAMPLE OUTPUT — validation/import script (AI API configured or not)
+
+HealthPredict assessment data import
+-----------------------------------
+Test 1: CREATED - Robyn Pears
+Test 2: REJECTED
+  - Enter a valid email address (for example, name@example.com).
+Test 3: CREATED - Darryl Tim
+Test 4: REJECTED
+  - Date of birth must be a real date in DD.MM.YYYY format.
+Test 5: CREATED - Sam Kerr
+Test 6: CREATED - Robyn Pears
+Test 7: CREATED - Madison XI
+Test 8: REJECTED
+  - Enter a valid email address (for example, name@example.com).
+  - Date of birth cannot be in the future.
+Test 9: CREATED - Tenille Singh
+Test 10: CREATED - Prem Kumar
+-----------------------------------
+Created 7 records; rejected 3 records.
+
+Note: AI remarks are generated only when OPENAI_API_KEY is configured.
+Without a key, the records are still stored with an AI-unavailable message.

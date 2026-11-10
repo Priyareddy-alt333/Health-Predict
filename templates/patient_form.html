@@ -1,0 +1,110 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | HealthPredict{% endblock %}
+
+{% block content %}
+
+<div class="form-card">
+
+    <h2>{{ page_title }}</h2>
+
+    <p>Enter the patient's information and blood test results below.</p>
+
+    <form method="POST">
+
+        <div class="form-group">
+            <label for="full_name">Full Name</label>
+            <input
+                type="text"
+                id="full_name"
+                name="full_name"
+                placeholder="Enter patient's full name"
+                value="{{ patient['full_name'] if patient else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Date of Birth (DD.MM.YYYY)</label>
+            <input
+                type="text"
+                id="dob"
+                name="dob"
+                placeholder="28.01.1960"
+                value="{{ patient['dob'] if patient else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="example@gmail.com"
+                value="{{ patient['email'] if patient else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="glucose">Glucose</label>
+            <input
+                type="number"
+                id="glucose"
+                name="glucose"
+                step="any"
+                min="0"
+                placeholder="Enter glucose value"
+                value="{{ patient['glucose'] if patient else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="haemoglobin">Haemoglobin</label>
+            <input
+                type="number"
+                id="haemoglobin"
+                name="haemoglobin"
+                step="any"
+                min="0"
+                placeholder="Enter haemoglobin value"
+                value="{{ patient['haemoglobin'] if patient else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="cholesterol">Cholesterol</label>
+            <input
+                type="number"
+                id="cholesterol"
+                name="cholesterol"
+                step="any"
+                min="0"
+                placeholder="Enter cholesterol value"
+                value="{{ patient['cholesterol'] if patient else '' }}"
+                required
+            >
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit" class="button">
+                {{ submit_label }}
+            </button>
+
+            <a href="{{ url_for('index') }}" class="button secondary">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

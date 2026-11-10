@@ -1,0 +1,103 @@
+
+{% extends "base.html" %}
+
+{% block title %}Patient Records | HealthPredict{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <h2>Patient Records</h2>
+        <p>Manage patient details and view AI-generated health remarks.</p>
+    </div>
+
+    <a href="{{ url_for('add_patient') }}" class="button">
+        + Add Patient
+    </a>
+</div>
+
+{% if not api_configured %}
+<div class="notice">
+    AI API key is not configured. Patient records can still be saved,
+    but AI remarks will be unavailable until you configure it.
+</div>
+{% endif %}
+
+{% if patients %}
+
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Date of Birth</th>
+                <th>Email</th>
+                <th>Glucose</th>
+                <th>Haemoglobin</th>
+                <th>Cholesterol</th>
+                <th>AI Remarks</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ patient.id }}</td>
+                <td>{{ patient.full_name }}</td>
+                <td>{{ patient.dob }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.glucose }}</td>
+                <td>{{ patient.haemoglobin }}</td>
+                <td>{{ patient.cholesterol }}</td>
+                <td class="remarks">{{ patient.remarks }}</td>
+
+                
+            <td class="actions">
+                <a href="{{ url_for('edit_patient', patient_id=patient.id) }}">
+         Edit
+                </a>
+
+                {% if patient.remarks.startswith('AI service') or patient.remarks.startswith('AI remarks pending') %}
+                <form method="POST"
+                    action="{{ url_for('retry_ai', patient_id=patient.id) }}">
+                <button type="submit" class="link-button">
+                Retry AI Remarks
+                </button>
+                </form>
+                {% endif %}
+
+    <form method="POST"
+          action="{{ url_for('delete_patient', patient_id=patient.id) }}"
+          onsubmit="return confirm('Are you sure you want to delete this patient?');">
+
+        <button type="submit" class="link-button danger">
+            Delete
+        </button>
+    </form>
+</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+
+<div class="empty-state">
+    <h3>No Patient Records Found</h3>
+    <p>Click the Add Patient button to create your first record.</p>
+</div>
+
+{% endif %}
+
+<div class="disclaimer">
+    <strong>Disclaimer:</strong>
+    AI-generated remarks are for informational purposes only
+    and should not be treated as a medical diagnosis.
+    Please consult a qualified healthcare professional.
+</div>
+
+{% endblock %}
